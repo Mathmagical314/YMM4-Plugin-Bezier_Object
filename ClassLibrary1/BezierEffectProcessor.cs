@@ -192,7 +192,7 @@ using YukkuriMovieMaker.Plugin.Effects;
             // 等間隔になるよう t を補正
             float t = GetNormalizedT(targetProgress, p0, p1, p2, p3);
             //
-            double curveScale = curve.GetSpeedAt(t);
+            double curveScale = curve.GetSpeedAt(t)/100.0;
             float curveScale2 = (float)curveScale;
             float u = 1f - t;
 
@@ -213,7 +213,7 @@ using YukkuriMovieMaker.Plugin.Effects;
             // 曲線範囲内の場合の変形マトリックス
             if (targetProgress >= 0f && targetProgress <= 1f)
             {
-                matrix = Matrix3x2.CreateRotation(angle) * Matrix3x2.CreateTranslation(position.X, position.Y)*Matrix3x2.CreateScale(Scale2D);
+                matrix = Matrix3x2.CreateScale(Scale2D)*Matrix3x2.CreateRotation(angle) * Matrix3x2.CreateTranslation(position.X, position.Y);
             }
             else
             {

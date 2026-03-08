@@ -65,7 +65,7 @@ namespace Curver
         [ToggleSlider]
         public bool AutoRotate { get => autoRotate; set => Set(ref autoRotate, value); }
 
-        [Display(Name = "Curve", Description = "Velocity curve editor")]
+        [Display(Name = "Curve", Description = "Velocity curve editor", Order = 13)]
         [CurveEditor]
         public string CurveData
         {
@@ -75,12 +75,12 @@ namespace Curver
         private string curveData = new VelocityCurve().Serialize();
 
 
-        [Display(Name = "スケール", Order = 13)]
-        [AnimationSlider("F1", "%", 0, 500)]
-        public Animation Scale { get; } = new Animation(1, 0, 9999);
+        [Display(Name = "スケール", Order = 14)]
+        [AnimationSlider("F1", "", 0, 500)]
+        public Animation Scale { get; } = new Animation(1, 0, 10);
 
         bool showGuide = true;
-        [Display(Name = "ガイド表示", Order = 14)]
+        [Display(Name = "ガイド表示", Order = 15)]
         [ToggleSlider]
         public bool ShowGuide { get => showGuide; set => Set(ref showGuide, value); }
 

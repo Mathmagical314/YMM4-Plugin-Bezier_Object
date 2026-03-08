@@ -383,9 +383,9 @@ namespace Curver
         {
             var pos = e.GetPosition(CurveCanvas);
 
-            double time = XToTime(pos.X, CurveCanvas.ActualWidth);
-            double speed = YToSpeed(pos.Y, CurveCanvas.ActualHeight);
-            InfoText.Text = $"Time: {time:P0} | Speed: {speed:F0}%";
+            double time = XToTime(pos.X, CurveCanvas.ActualWidth)/100.0;
+            double speed = YToSpeed(pos.Y, CurveCanvas.ActualHeight)/100.0;
+            InfoText.Text = $"Factor: {time:P0} | Scale: {speed:F0}";
 
             if (draggedKeyframe != null && e.LeftButton == MouseButtonState.Pressed)
             {
