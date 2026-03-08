@@ -7,7 +7,7 @@ using YukkuriMovieMaker.Player.Video;
 using YukkuriMovieMaker.Plugin;
 using YukkuriMovieMaker.Plugin.Effects;
 
-namespace TextBezier
+namespace Curver
 {
     [VideoEffect("TextBezier", ["描画"], [])]
     public class TextBezierEffect : VideoEffectBase
@@ -64,6 +64,16 @@ namespace TextBezier
         [Display(Name = "向く", Order = 12)]
         [ToggleSlider]
         public bool AutoRotate { get => autoRotate; set => Set(ref autoRotate, value); }
+
+        [Display(Name = "Curve", Description = "Velocity curve editor")]
+        [CurveEditor]
+        public string CurveData
+        {
+            get => curveData;
+            set => Set(ref curveData, value);
+        }
+        private string curveData = new VelocityCurve().Serialize();
+
 
         [Display(Name = "スケール", Order = 13)]
         [AnimationSlider("F1", "%", 0, 500)]

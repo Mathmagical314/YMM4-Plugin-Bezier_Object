@@ -6,7 +6,7 @@ using YukkuriMovieMaker.Commons;
 using YukkuriMovieMaker.Player.Video;
 using YukkuriMovieMaker.Plugin;
 using YukkuriMovieMaker.Plugin.Effects;
- namespace TextBezier
+ namespace Curver
 {
     internal class TextBezierProcessor : IVideoEffectProcessor
     {
@@ -29,6 +29,8 @@ using YukkuriMovieMaker.Plugin.Effects;
 
         // ガイド表示がONなら合成結果を、OFFなら画像だけをYMM4に返す
         public ID2D1Image Output => _isGuideDrawn ? _compositeEffect.Output : _transformEffect.Output;
+
+        VelocityCurve? curve;
 
         public TextBezierProcessor(IGraphicsDevicesAndContext devices, TextBezierEffect effect)
         {
@@ -99,6 +101,10 @@ using YukkuriMovieMaker.Plugin.Effects;
             var length = description.ItemDuration.Frame;
             var fps = description.FPS;
 
+            if (curve == null || _effect.CurveData != curve.Serialize())
+            {
+                curve = VelocityCurve.Deserialize(_effect.CurveData);
+            }
             // 各座標の取得
             float p0x = (float)_effect.P0X.GetValue(frame, length, fps);
             float p0y = (float)_effect.P0Y.GetValue(frame, length, fps);
@@ -185,13 +191,16 @@ using YukkuriMovieMaker.Plugin.Effects;
 
             // 等間隔になるよう t を補正
             float t = GetNormalizedT(targetProgress, p0, p1, p2, p3);
-
+            //
+            double curveScale = curve.GetSpeedAt(t);
+            float curveScale2 = (float)curveScale;
             float u = 1f - t;
 
             // 現在地と角度の計算
             Vector2 position = (u * u * u) * p0 + 3 * (u * u) * t * p1 + 3 * u * (t * t) * p2 + (t * t * t) * p3;
             float angle = Angle_Degree * (MathF.PI / 180f); ;
-            Vector2 Scale2D = new(Scale, Scale);
+            Vector2 Scale2D = new(Scale*curveScale2, Scale*curveScale2) ;
+            
             if (_effect.AutoRotate)
             {
                 Vector2 tangent = 3 * (u * u) * (p1 - p0) + 6 * u * t * (p2 - p1) + 3 * (t * t) * (p3 - p2);

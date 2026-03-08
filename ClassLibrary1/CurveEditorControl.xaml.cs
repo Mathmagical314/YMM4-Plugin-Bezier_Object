@@ -217,8 +217,8 @@ namespace Curver
             DrawKeyframes(width, height);
         }
         
-        private const double MinSpeed = -100.0;
-        private const double MaxSpeed = 300.0;
+        private const double MinSpeed = 000.0;
+        private const double MaxSpeed = 500.0;
         private double SpeedRange => MaxSpeed - MinSpeed;
 
         private void DrawGrid(double width, double height)
