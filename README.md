@@ -1,6 +1,9 @@
+<!-- シールド一覧 -->
+<div id="top"></div>
+<p style="display: inline">
 1.ベジェ曲線でオブジェクトを配置・移動・スケールを可能にするプラグイン
 
 2.カーブを使用して、ベジェ曲線の位置に応じてスケールすることが可能
 
 3.NA-JPBrew様のAiuCurverとSalmon-P-0517様のTextBezierを魔合体させてつくりました
-
+</p>
