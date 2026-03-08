@@ -5,6 +5,6 @@
 
 3.NA-JPBrew様のAiuCurverとSalmon-P-0517様のTextBezierを魔合体させてつくりました
 ## 注意
-以下のGIFのようにテキストを配置したい場合、文字間隔がを文字サイズ*-1になるようにしてください
+以下のGIFのようにテキストを配置したい場合、文字間隔が文字サイズ*-1になるようにしてください
 [![Image](https://github.com/user-attachments/assets/c584b979-1483-484e-acd4-e9fc71a703f4)
 ](https://github.com/Mathmagical314/YMM4-Plugin-Bezier_Object/issues/1#issue-4041049409)
