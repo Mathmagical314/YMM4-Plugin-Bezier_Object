@@ -1,0 +1,143 @@
+<UserControl x:Class="Curver.CurveEditorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Curver"
+             mc:Ignorable="d" 
+             d:DesignWidth="600" d:DesignHeight="400" 
+             Background="#1E1E1E"
+             Name="this">
+    <UserControl.Resources>
+        <!-- Modern button style -->
+        <Style x:Key="PresetButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3E3E42"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#007ACC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Accent button style -->
+        <Style x:Key="AccentButtonStyle" TargetType="Button" BasedOn="{StaticResource PresetButtonStyle}">
+            <Setter Property="Background" Value="#0E639C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1177BB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with preset buttons -->
+        <Border Grid.Row="0" Background="#252526" BorderBrush="#3F3F46" BorderThickness="0,0,0,1" Padding="8">
+            <StackPanel>
+                <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="AiuCurver" 
+                              Foreground="#CCCCCC" 
+                              FontWeight="SemiBold" 
+                              FontSize="12"
+                              VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="Add Keyframe" Style="{StaticResource AccentButtonStyle}" 
+                                Command="{Binding AddKeyframeCommand}" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <ComboBox ItemsSource="{Binding PresetNames}" 
+                              SelectedItem="{Binding SelectedPresetName}"
+                              IsEditable="True"
+                              Margin="0,0,4,0"
+                              Height="22"
+                              VerticalContentAlignment="Center"/>
+                              
+                    <Button Grid.Column="1" Content="Save" Style="{StaticResource PresetButtonStyle}" 
+                            Command="{Binding SavePresetCommand}" ToolTip="Save current curve as preset"/>
+                            
+                    <Button Grid.Column="2" Content="Del" Style="{StaticResource PresetButtonStyle}" 
+                            Command="{Binding DeletePresetCommand}" ToolTip="Delete current preset"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Curve canvas -->
+        <Border Grid.Row="1" Background="#1E1E1E" BorderBrush="#3F3F46" BorderThickness="1" Margin="4">
+            <Grid>
+                <!-- Grid background -->
+                <Canvas x:Name="GridCanvas" ClipToBounds="True">
+                    <!-- Background gradient -->
+                    <Canvas.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#1A1A1D" Offset="0"/>
+                            <GradientStop Color="#252528" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Canvas.Background>
+                </Canvas>
+
+                <!-- Main curve canvas -->
+                <Canvas x:Name="CurveCanvas" 
+                        Background="Transparent"
+                        ClipToBounds="True"
+                        MouseLeftButtonDown="CurveCanvas_MouseLeftButtonDown"
+                        MouseMove="CurveCanvas_MouseMove"
+                        MouseLeftButtonUp="CurveCanvas_MouseLeftButtonUp"
+                        MouseRightButtonDown="CurveCanvas_MouseRightButtonDown"/>
+            </Grid>
+        </Border>
+
+        <!-- Footer with info -->
+        <Border Grid.Row="2" Background="#252526" BorderBrush="#3F3F46" BorderThickness="0,1,0,0" Padding="8,4">
+            <Grid>
+                <TextBlock x:Name="InfoText" 
+                          Text="Left: Drag keyframes | Right: Remove keyframe" 
+                          Foreground="#999999" 
+                          FontSize="10"
+                          VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
