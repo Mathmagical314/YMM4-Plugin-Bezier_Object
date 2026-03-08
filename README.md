@@ -1,4 +1,4 @@
-[##  最新版ダウンロード]([https://www.google.co.jp](https://github.com/Mathmagical314/YMM4-Plugin-Bezier_Object/releases/tag/ver1.0))
+[  最新版ダウンロード  ]([https://www.google.co.jp](https://github.com/Mathmagical314/YMM4-Plugin-Bezier_Object/releases/tag/ver1.0))
 
 ##  概要
 1.ベジェ曲線でオブジェクトを配置・移動・スケールを可能にするプラグイン
